@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orleans Early Voting Turnout Map</title>
+    <title>Early Voting Turnout Map</title>
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css" rel="stylesheet" />
     <style>
@@ -47,12 +47,12 @@
                                 'interpolate',
                                 ['linear'],
                                 ['get', 'ev_turnout'],
-                                0, '#ffffcc',   // Light yellow for low turnout
-                                0.1, '#ffeb99',  // Light yellow-orange
-                                0.2, '#ffcc66',  // Light orange
-                                0.3, '#ff9933',  // Medium orange
-                                0.4, '#ff6600',  // Dark orange
-                                1, '#cc0000'     // Dark red for high turnout
+                                0, '#cc0000',  // Dark red for low turnout
+                                0.1, '#ff6600', // Dark orange
+                                0.2, '#ff9933', // Medium orange
+                                0.3, '#ffcc66', // Light orange
+                                0.4, '#ffeb99', // Light yellow-orange
+                                1, '#ffffcc'    // Light yellow for high turnout
                             ],
                             'fill-opacity': 0.6
                         }
@@ -92,17 +92,4 @@
                                 '%'
                             ],
                             'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-                            'text-size': 12,
-                            'text-anchor': 'center',
-                            'text-offset': [0, 0.5]
-                        },
-                        'paint': {
-                            'text-color': '#000000'
-                        }
-                    });
-                });
-            })
-            .catch(error => console.error('Error loading the GeoJSON data:', error));
-    </script>
-</body>
-</html>
+        
