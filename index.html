@@ -25,6 +25,12 @@
             zoom: 12
         });
 
+        // Create a popup
+        const popup = new mapboxgl.Popup({
+            closeOnClick: false,
+            closeButton: true
+        });
+
         // Load the GeoJSON data
         fetch('https://raw.githubusercontent.com/mradamcox/op-early-voting-map/main/Voting%20Precincts_20241031-with-early-voting-data.geojson')
             .then(response => response.json())
@@ -99,6 +105,36 @@
                         'paint': {
                             'text-color': '#000000'
                         }
+                    });
+
+                    // Add click event to show popup
+                    map.on('click', 'precincts', (e) => {
+                        const feature = e.features[0];
+                        const coordinates = e.lngLat;
+
+                        // Create the popup content
+                        const popupContent = `
+                            <strong>Precinct ID:</strong> ${feature.properties.precinctid}<br>
+                            <strong>Registered Voters:</strong> ${feature.properties.registered_voters}<br>
+                            <strong>Yet to Vote:</strong> ${feature.properties.yet_to_vote}<br>
+                            <strong>Early Voting Turnout:</strong> ${(feature.properties.ev_turnout * 100).toFixed(1)}%
+                        `;
+
+                        // Set popup coordinates and content
+                        popup
+                            .setLngLat(coordinates)
+                            .setHTML(popupContent)
+                            .addTo(map);
+                    });
+
+                    // Change the cursor to a pointer when hovering over a precinct
+                    map.on('mouseenter', 'precincts', () => {
+                        map.getCanvas().style.cursor = 'pointer';
+                    });
+
+                    // Change it back to a pointer when leaving
+                    map.on('mouseleave', 'precincts', () => {
+                        map.getCanvas().style.cursor = '';
                     });
                 });
             })
