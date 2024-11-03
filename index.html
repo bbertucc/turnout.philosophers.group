@@ -15,7 +15,7 @@
     <div id="map"></div>
     <script>
         // Your Mapbox access token
-        mapboxgl.accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN';
+        mapboxgl.accessToken = 'pk.eyJ1IjoiYmJlcnR1Y2MiLCJhIjoiY20zMHd5bmV4MHR5bTJpcHhjN2p5aXUyeCJ9.w8RcgVSQOvRSyaDnyC1GoQ';
 
         // Create the map
         const map = new mapboxgl.Map({
@@ -66,7 +66,21 @@
                         'type': 'symbol',
                         'source': 'voting-precincts',
                         'layout': {
-                            'text-field': ['get', 'ev_turnout'],
+                            'text-field': [
+                                'concat',
+                                [
+                                    'to-string',
+                                    [
+                                        'round',
+                                        [
+                                            '*',
+                                            ['get', 'ev_turnout'],
+                                            100
+                                        ]
+                                    ]
+                                ],
+                                '%'
+                            ],
                             'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
                             'text-size': 12,
                             'text-anchor': 'center',
